@@ -41,7 +41,7 @@ public class TankController implements KeyListener {
             vY = -(float) (tank.getMoveSpeed() * Math.cos((angle * Math.PI / 180)));
         } else if (backward) {
             vX = -(float) (tank.getMoveSpeed() * Math.sin((angle * Math.PI / 180)));
-            vY = +(float) (tank.getMoveSpeed() * Math.cos((angle * Math.PI / 180)));
+            vY = (float) (tank.getMoveSpeed() * Math.cos((angle * Math.PI / 180)));
         }
         if (left) {
             angle -= tank.getAngularV();
