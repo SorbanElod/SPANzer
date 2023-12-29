@@ -1,57 +1,22 @@
 package main.views;
 
-import main.controllers.TankController;
-import main.models.Tank;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.geom.Point2D;
 
 public class GamePanel extends JPanel {
 
-    private TankView tv1;
-    private Tank t1;
-    private TankController tc1;
-    private TankView tv2;
-    private Tank t2;
-    private TankController tc2;
+    TankView tankView1;
+    TankView tankView2;
 
-    GamePanel() {
-        t1 = new Tank(new Point2D.Float(300, 100), 10f,"greenTank.png");
-        t2 = new Tank(new Point2D.Float(300, 200), 10f,"pinkTank.png");
-
-        tv1 = new TankView(t1);
-        tv2 = new TankView(t2);
-
-        tc1 = new TankController(t1, 1);
-        tc2 = new TankController(t2, 2);
-
-
-        this.addKeyListener(tc1);
-        this.addKeyListener(tc2);
-
-        this.setFocusable(true); // Enable focus
-        this.requestFocusInWindow(); // Request focus
-        int delay = 16; // delay in milliseconds (adjust as needed for your desired frame rate)
-        Timer timer = new Timer(delay, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tc1.updatePosition();
-                tc2.updatePosition();
-
-                repaint();
-            }
-        });
-        timer.start();
+    public GamePanel(TankView tankView1, TankView tankView2) {
+        this.tankView1 = tankView1;
+        this.tankView2 = tankView2;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        tv1.draw(g);
-        tv2.draw(g);
-
+        tankView1.draw(g);
+        tankView2.draw(g);
     }
 }

@@ -24,6 +24,10 @@ public class TankController implements KeyListener {
         this.player = player;
     }
 
+    public void setTank(Tank tank) {
+        this.tank = tank;
+    }
+
     public void updatePosition() {
         Point2D.Float currentPos = tank.getCorner();
         float angle = tank.getAngle();

@@ -1,9 +1,9 @@
 package main;
 
-import main.views.GameFrame;
+import main.controllers.GameController;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        GameFrame gameFrame = new GameFrame();
+        GameController gameController = new GameController();
     }
 }

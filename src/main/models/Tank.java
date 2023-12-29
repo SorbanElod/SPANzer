@@ -19,12 +19,7 @@ public class Tank {
     public Tank(Point2D.Float corner, float angle, String fileName) {
         this.corner = corner;
         this.angle = angle;
-        String imagePath = "src/resources/img/" + fileName;
-        try {
-            baseImage = ImageIO.read(new File(imagePath));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        setBaseImage(fileName);
     }
 
     public Point2D.Float getCorner() {
@@ -47,7 +42,8 @@ public class Tank {
         return baseImage;
     }
 
-    public void setBaseImage(String imagePath) {
+    public void setBaseImage(String fileName) {
+        String imagePath = "src/resources/img/" + fileName;
         try {
             baseImage = ImageIO.read(new File(imagePath));
         } catch (IOException e) {
