@@ -2,9 +2,9 @@ package main.controllers;
 
 import main.models.Tank;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Point2D;
 
 public class TankController implements KeyListener {
     private Tank tank;
@@ -24,21 +24,35 @@ public class TankController implements KeyListener {
         this.player = player;
     }
 
-    public void update() {
-        Point p = tank.getCorner();
-        if (forward) {
-            p.y -= tank.getSpeed();
-        }
-        if (backward) {
-            p.y += tank.getSpeed();
+    public void updatePosition() {
+        Point2D.Float currentPos = tank.getCorner();
+        float angle = tank.getAngle();
+        float vX = 0;
+        float vY = 0;
+        if (forward && backward) {
+            vX = 0;
+            vY = 0;
+        } else if (forward) {
+            vX = (float) (tank.getMoveSpeed() * Math.sin((angle * Math.PI / 180)));
+            vY = -(float) (tank.getMoveSpeed() * Math.cos((angle * Math.PI / 180)));
+        } else if (backward) {
+            vX = -(float) (tank.getMoveSpeed() * Math.sin((angle * Math.PI / 180)));
+            vY = +(float) (tank.getMoveSpeed() * Math.cos((angle * Math.PI / 180)));
         }
         if (left) {
-            p.x -= tank.getSpeed();
+            angle -= tank.getAngularV();
         }
         if (right) {
-            p.x += tank.getSpeed();
+            angle += tank.getAngularV();
         }
-        tank.setCorner(p);
+        angle = angle % 360;
+        if (angle < 0) {
+            angle = 360 - angle;
+        }
+        currentPos.x += vX;
+        currentPos.y += vY;
+        tank.setCorner(currentPos);
+        tank.setAngle(angle);
     }
 
     @Override
@@ -57,7 +71,7 @@ public class TankController implements KeyListener {
     }
 
     private void handleKey(int keyCode, boolean pressed) {
-        if(player == 1){
+        if (player == 1) {
             switch (keyCode) {
                 case KeyEvent.VK_UP:
                     forward = pressed;
@@ -72,8 +86,7 @@ public class TankController implements KeyListener {
                     right = pressed;
                     break;
             }
-        }
-        else{
+        } else {
             switch (keyCode) {
                 case KeyEvent.VK_W:
                     forward = pressed;

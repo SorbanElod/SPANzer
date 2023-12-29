@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Point2D;
 
 public class GamePanel extends JPanel {
 
@@ -18,8 +19,8 @@ public class GamePanel extends JPanel {
     private TankController tc2;
 
     GamePanel() {
-        t1 = new Tank(new Point(300, 100), 10f);
-        t2 = new Tank(new Point(300, 200), 10f);
+        t1 = new Tank(new Point2D.Float(300, 100), 10f);
+        t2 = new Tank(new Point2D.Float(300, 200), 10f);
 
         tv1 = new TankView(t1);
         tv2 = new TankView(t2);
@@ -37,8 +38,8 @@ public class GamePanel extends JPanel {
         Timer timer = new Timer(delay, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                tc1.update();
-                tc2.update();
+                tc1.updatePosition();
+                tc2.updatePosition();
 
                 repaint();
             }

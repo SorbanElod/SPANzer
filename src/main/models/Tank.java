@@ -1,21 +1,22 @@
 package main.models;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public class Tank {
-    private Point corner;
+    private Point2D.Float corner;
     private float angle;
     private BufferedImage baseImage;
     private BufferedImage rotatedImage;
 
-    private int speed = 2;
+    private float moveSpeed = 3.5f;
     private int friction;
+    private float angularV = 4f;
 
-    public Tank(Point corner, float angle) {
+    public Tank(Point2D.Float corner, float angle) {
         this.corner = corner;
         this.angle = angle;
         String imagePath = "src/resources/img/pinkTank.png";
@@ -32,11 +33,11 @@ public class Tank {
         }
     }
 
-    public Point getCorner() {
+    public Point2D.Float getCorner() {
         return corner;
     }
 
-    public void setCorner(Point corner) {
+    public void setCorner(Point2D.Float corner) {
         this.corner = corner;
     }
 
@@ -52,7 +53,12 @@ public class Tank {
         return baseImage;
     }
 
-    public int getSpeed() {
-        return speed;
+    public float getMoveSpeed() {
+        return moveSpeed;
     }
+
+    public float getAngularV() {
+        return angularV;
+    }
+
 }
