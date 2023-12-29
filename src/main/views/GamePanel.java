@@ -19,8 +19,8 @@ public class GamePanel extends JPanel {
     private TankController tc2;
 
     GamePanel() {
-        t1 = new Tank(new Point2D.Float(300, 100), 10f);
-        t2 = new Tank(new Point2D.Float(300, 200), 10f);
+        t1 = new Tank(new Point2D.Float(300, 100), 10f,"greenTank.png");
+        t2 = new Tank(new Point2D.Float(300, 200), 10f,"pinkTank.png");
 
         tv1 = new TankView(t1);
         tv2 = new TankView(t2);

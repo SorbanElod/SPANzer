@@ -16,20 +16,14 @@ public class Tank {
     private int friction;
     private float angularV = 4f;
 
-    public Tank(Point2D.Float corner, float angle) {
+    public Tank(Point2D.Float corner, float angle, String fileName) {
         this.corner = corner;
         this.angle = angle;
-        String imagePath = "src/resources/img/pinkTank.png";
+        String imagePath = "src/resources/img/" + fileName;
         try {
             baseImage = ImageIO.read(new File(imagePath));
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-        if (baseImage != null) {
-            System.out.println("Image loaded successfully.");
-
-        } else {
-            System.out.println("Failed to load the image.");
         }
     }
 
@@ -51,6 +45,14 @@ public class Tank {
 
     public BufferedImage getBaseImage() {
         return baseImage;
+    }
+
+    public void setBaseImage(String imagePath) {
+        try {
+            baseImage = ImageIO.read(new File(imagePath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public float getMoveSpeed() {
