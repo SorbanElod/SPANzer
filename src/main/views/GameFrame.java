@@ -1,3 +1,5 @@
+package main.views;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,7 +18,6 @@ public class GameFrame extends JFrame {
 
         gamePanel = new GamePanel();
         this.add(gamePanel,BorderLayout.CENTER);
-
         this.setVisible(true);
     }
 
