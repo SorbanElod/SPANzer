@@ -24,7 +24,9 @@ public class GameFrame extends JFrame {
         this.setLayout(new BorderLayout());
 
         this.gamePanel = gamePanel;
-        this.add(gamePanel, BorderLayout.CENTER);
+        JPanel qfix = new JPanel();
+        qfix.add(gamePanel);
+        this.add(qfix, BorderLayout.CENTER);
         this.setVisible(true);
 
 

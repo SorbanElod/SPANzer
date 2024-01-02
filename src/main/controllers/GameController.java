@@ -1,8 +1,10 @@
 package main.controllers;
 
+import main.models.Map;
 import main.models.Tank;
 import main.views.GameFrame;
 import main.views.GamePanel;
+import main.views.MapView;
 import main.views.TankView;
 
 import javax.swing.*;
@@ -19,48 +21,10 @@ public class GameController {
 
     private GamePanel gamePanel;
     private TankView tankView1;
-
-    public TankView getTankView1() {
-        return tankView1;
-    }
-
-    public TankView getTankView2() {
-        return tankView2;
-    }
-
     private TankView tankView2;
 
-    private void initGame() {
-        this.tank1 = new Tank(new Point2D.Float(0, 0), 0, "transparent.png");
-        this.tank2 = new Tank(new Point2D.Float(0, 0), 0, "transparent.png");
-
-        tankView1 = new TankView(tank1);
-        tankView2 = new TankView(tank2);
-
-        tc1 = new TankController(tank1, 1);
-        tc2 = new TankController(tank2, 2);
-
-        gamePanel = new GamePanel(tankView1, tankView2);
-        GameFrame gameFrame = new GameFrame(gamePanel);
-
-        gameFrame.addKeyListener(tc1);
-        gameFrame.addKeyListener(tc2);
-
-        gameFrame.setFocusable(true);
-        gameFrame.requestFocusInWindow();
-    }
-
-    private void startGame() {
-        this.tank1 = new Tank(new Point2D.Float(300, 100), 10f, "greenTank.png");
-        this.tank2 = new Tank(new Point2D.Float(300, 200), 10f, "pinkTank.png");
-
-        tankView1.setTank(tank1);
-        tankView2.setTank(tank2);
-
-        tc1.setTank(tank1);
-        tc2.setTank(tank2);
-
-    }
+    private Map map;
+    private MapView mapView;
 
     public GameController() {
         initGame();
@@ -77,6 +41,51 @@ public class GameController {
         });
         timer.start();
     }
+
+    private void initGame() {
+        this.tank1 = new Tank(new Point2D.Float(0, 0), 0, "transparent.png");
+        this.tank2 = new Tank(new Point2D.Float(0, 0), 0, "transparent.png");
+
+        this.tankView1 = new TankView(tank1);
+        this.tankView2 = new TankView(tank2);
+
+        this.tc1 = new TankController(tank1, 1);
+        this.tc2 = new TankController(tank2, 2);
+
+        this.map = new Map(6, 4, 100);
+        this.mapView = new MapView(map);
+
+        this.gamePanel = new GamePanel(tankView1, tankView2, mapView);
+        GameFrame gameFrame = new GameFrame(gamePanel);
+
+        gameFrame.addKeyListener(tc1);
+        gameFrame.addKeyListener(tc2);
+
+        gameFrame.setFocusable(true);
+        gameFrame.requestFocusInWindow();
+    }
+
+    private void startGame() {
+        map.generate();
+        this.tank1 = new Tank(new Point2D.Float(300, 100), 10f, "greenTank.png");
+        this.tank2 = new Tank(new Point2D.Float(300, 200), 10f, "pinkTank.png");
+
+        tankView1.setTank(tank1);
+        tankView2.setTank(tank2);
+
+        tc1.setTank(tank1);
+        tc2.setTank(tank2);
+
+    }
+
+    public TankView getTankView1() {
+        return tankView1;
+    }
+
+    public TankView getTankView2() {
+        return tankView2;
+    }
+
 }
 
 

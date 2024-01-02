@@ -7,20 +7,20 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class TankView {
-    public void setTank(Tank tank) {
-        this.tank = tank;
-    }
-
     private Tank tank;
 
     public TankView(Tank tank) {
         this.tank = tank;
     }
 
+    public void setTank(Tank tank) {
+        this.tank = tank;
+    }
+
     private BufferedImage rotateImage() {
         int width = tank.getBaseImage().getWidth();
         int height = tank.getBaseImage().getHeight();
-        double scaleFactor = 1.5;
+        double scaleFactor = 1.0;
         BufferedImage rotatedBmp = new BufferedImage(
                 (int) (width * scaleFactor),
                 (int) (height * scaleFactor),
