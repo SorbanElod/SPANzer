@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
+import java.util.Random;
 
 public class GameController {
     private Tank tank1;
@@ -25,6 +26,10 @@ public class GameController {
 
     private Map map;
     private MapView mapView;
+    private MapController mc;
+
+    private int width = 10;
+    private int height = 5;
 
     public GameController() {
         initGame();
@@ -52,8 +57,9 @@ public class GameController {
         this.tc1 = new TankController(tank1, 1);
         this.tc2 = new TankController(tank2, 2);
 
-        this.map = new Map(6, 4, 100);
+        this.map = new Map(width, height, 100);
         this.mapView = new MapView(map);
+        this.mc = new MapController(map);
 
         this.gamePanel = new GamePanel(tankView1, tankView2, mapView);
         GameFrame gameFrame = new GameFrame(gamePanel);
@@ -66,16 +72,16 @@ public class GameController {
     }
 
     private void startGame() {
-        map.generate();
-        this.tank1 = new Tank(new Point2D.Float(300, 100), 10f, "greenTank.png");
-        this.tank2 = new Tank(new Point2D.Float(300, 200), 10f, "pinkTank.png");
+        mc.generate();
+        Random rng = new Random();
+        this.tank1 = new Tank(new Point2D.Float(rng.nextInt(0, width) * map.getBrickSize() + 20, rng.nextInt(0, height) * map.getBrickSize() + 20), rng.nextFloat(0, 360), "greenTank.png");
+        this.tank2 = new Tank(new Point2D.Float(rng.nextInt(0, width) * map.getBrickSize() + 20, rng.nextInt(0, height) * map.getBrickSize() + 20), rng.nextFloat(0, 360), "pinkTank.png");
 
         tankView1.setTank(tank1);
         tankView2.setTank(tank2);
 
         tc1.setTank(tank1);
         tc2.setTank(tank2);
-
     }
 
     public TankView getTankView1() {

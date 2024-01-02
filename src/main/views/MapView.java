@@ -41,4 +41,12 @@ public class MapView {
             }
         }
     }
+
+    public Dimension getMapDimension() {
+        return new Dimension(
+                (map.getWidth() - 1) * map.getBrickSize() + 2 * wallWidth,
+                (map.getHeight() - 1) * map.getBrickSize() + 2 * wallWidth
+        );
+    }
+
 }

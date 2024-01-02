@@ -49,31 +49,21 @@ public class Map {
         return height;
     }
 
-    public void generate() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                Brick brick;
-                brick = new Brick(
-                        i * brickSize, j * brickSize,
-                        (i + 1) * brickSize, j * brickSize
-                );
-                setHorizontal(i, j, brick);
-                brick = new Brick(
-                        i * brickSize, j * brickSize,
-                        i * brickSize, (j + 1) * brickSize
-                );
-                setVertical(i, j, brick);
-            }
-        }
-        this.trim();
+    public int getBrickSize() { return brickSize; }
+
+    public List<List<Brick>> getHorizontals() {
+        return horizontals;
     }
 
-    public void trim() {
-        for (int i = 0; i < width; i++) {
-            setVertical(i, height - 1, null);
-        }
-        for (int i = 0; i < height; i++) {
-            setHorizontal(width - 1, i, null);
-        }
+    public void setHorizontals(List<List<Brick>> horizontals) {
+        this.horizontals = horizontals;
+    }
+
+    public List<List<Brick>> getVerticals() {
+        return verticals;
+    }
+
+    public void setVerticals(List<List<Brick>> verticals) {
+        this.verticals = verticals;
     }
 }

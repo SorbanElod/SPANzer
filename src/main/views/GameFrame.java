@@ -24,12 +24,12 @@ public class GameFrame extends JFrame {
         this.setLayout(new BorderLayout());
 
         this.gamePanel = gamePanel;
-        JPanel qfix = new JPanel();
-        qfix.add(gamePanel);
-        this.add(qfix, BorderLayout.CENTER);
+
+        JPanel mapPanel = new JPanel();
+        mapPanel.add(gamePanel);
+
+        this.add(mapPanel, BorderLayout.CENTER);
         this.setVisible(true);
-
-
     }
 
     // Resize method
