@@ -43,11 +43,16 @@ public class TankView {
     }
 
     public void draw(Graphics g) {
-        BufferedImage rotatedImage;
+        if (tank.isSpawned()) {
+            BufferedImage rotatedImage;
 
-        rotatedImage = rotateImage();
-        // Draw the rotated image
-        g.drawImage(rotatedImage, (int) tank.getCorner().x, (int) tank.getCorner().y, null);
+            rotatedImage = rotateImage();
+            // Draw the rotated image
+            g.drawImage(rotatedImage, (int) tank.getCorner().x, (int) tank.getCorner().y, null);
+        } else {
+            g.drawImage(tank.getTransparentImage(), (int) tank.getCorner().x, (int) tank.getCorner().y, null);
+        }
+
     }
 
 }

@@ -10,15 +10,23 @@ public class Tank {
     private Point2D.Float corner;
     private float angle;
     private BufferedImage baseImage;
-
+    private BufferedImage transparentImage;
     private float moveSpeed = 3.5f;
     private int friction;
     private float angularV = 4f;
+    private boolean isSpawned;
 
     public Tank(Point2D.Float corner, float angle, String fileName) {
         this.corner = corner;
         this.angle = angle;
         setBaseImage(fileName);
+        String imagePath = "src/resources/img/transparent.png";
+        try {
+            transparentImage = ImageIO.read(new File(imagePath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        isSpawned = false;
     }
 
     public Point2D.Float getCorner() {
@@ -56,5 +64,17 @@ public class Tank {
 
     public float getAngularV() {
         return angularV;
+    }
+
+    public boolean isSpawned() {
+        return isSpawned;
+    }
+
+    public void setSpawned(boolean spawned) {
+        isSpawned = spawned;
+    }
+
+    public BufferedImage getTransparentImage() {
+        return transparentImage;
     }
 }

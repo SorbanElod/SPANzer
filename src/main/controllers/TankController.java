@@ -63,11 +63,11 @@ public class TankController implements KeyListener {
     public void spawn(Map map, String filename) {
         tank.setBaseImage(filename);
         tank.setCorner(new Point2D.Float(
-                rng.nextInt(0, map.getWidth()) * map.getBrickSize() + 20,
-                rng.nextInt(0, map.getHeight()) * map.getBrickSize() + 20
+                rng.nextInt(0, map.getWidth() - 1) * map.getBrickSize() + 20,
+                rng.nextInt(0, map.getHeight() - 1) * map.getBrickSize() + 20
         ));
         tank.setAngle(rng.nextFloat(0, 360));
-        System.out.println(tank.getCorner());
+        tank.setSpawned(true);
     }
 
     @Override
