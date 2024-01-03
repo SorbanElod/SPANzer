@@ -9,7 +9,6 @@ import static main.models.Brick.wallWidth;
 
 public class MapView {
     private Map map;
-
     public MapView(Map map) {
         this.map = map;
     }

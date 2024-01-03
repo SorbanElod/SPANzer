@@ -25,10 +25,6 @@ public class TankController implements KeyListener {
         rng = new Random();
     }
 
-    public void setTank(Tank tank) {
-        this.tank = tank;
-    }
-
     public void updatePosition() {
         Point2D.Float currentPos = tank.getCorner();
         float angle = tank.getAngle();
@@ -60,8 +56,7 @@ public class TankController implements KeyListener {
         tank.setAngle(angle);
     }
 
-    public void spawn(Map map, String filename) {
-        tank.setBaseImage(filename);
+    public void spawn(Map map) {
         tank.setCorner(new Point2D.Float(
                 rng.nextInt(0, map.getWidth() - 1) * map.getBrickSize() + 20,
                 rng.nextInt(0, map.getHeight() - 1) * map.getBrickSize() + 20

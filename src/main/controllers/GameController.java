@@ -11,24 +11,23 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
-import java.util.Random;
 
 public class GameController {
-    private Tank tank1, tank2;
+    private Tank t1, t2;
     private TankController tc1, tc2;
+    private TankView tv1, tv2;
     private GamePanel gamePanel;
-    private TankView tankView1, tankView2;
     private Map map;
     private MapView mapView;
     private MapController mc;
-    private int width = 10;
-    private int height = 5;
+    private final int width = 10;
+    private final int height = 5;
 
     public GameController() {
         initGame();
         startGame();
 
-        int delay = 16; // delay in milliseconds (adjust as needed for your desired frame rate)
+        int delay = 16; // delay in milliseconds
         Timer timer = new Timer(delay, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -41,20 +40,20 @@ public class GameController {
     }
 
     private void initGame() {
-        this.tank1 = new Tank(new Point2D.Float(0, 0), 0, "transparent.png");
-        this.tank2 = new Tank(new Point2D.Float(0, 0), 0, "transparent.png");
+        this.t1 = new Tank(new Point2D.Float(0, 0), 0, "greenTank.png");
+        this.t2 = new Tank(new Point2D.Float(0, 0), 0, "pinkTank.png");
 
-        this.tankView1 = new TankView(tank1);
-        this.tankView2 = new TankView(tank2);
+        this.tv1 = new TankView(t1);
+        this.tv2 = new TankView(t2);
 
-        this.tc1 = new TankController(tank1, 1);
-        this.tc2 = new TankController(tank2, 2);
+        this.tc1 = new TankController(t1, 1);
+        this.tc2 = new TankController(t2, 2);
 
         this.map = new Map(width, height, 100);
         this.mapView = new MapView(map);
         this.mc = new MapController(map);
 
-        this.gamePanel = new GamePanel(tankView1, tankView2, mapView);
+        this.gamePanel = new GamePanel(tv1, tv2, mapView);
         GameFrame gameFrame = new GameFrame(gamePanel);
 
         gameFrame.addKeyListener(tc1);
@@ -66,25 +65,12 @@ public class GameController {
 
     private void startGame() {
         mc.generate();
-        Random rng = new Random();
-        tc1.spawn(map, "greenTank.png");
-        tc2.spawn(map, "pinkTank.png");
-
-        tankView1.setTank(tank1);
-        tankView2.setTank(tank2);
-
-        tc1.setTank(tank1);
-        tc2.setTank(tank2);
+        tc1.spawn(map);
+        tc2.spawn(map);
+        while(t1.getCorner() == t2.getCorner()){
+            tc2.spawn(map);
+        }
     }
-
-    public TankView getTankView1() {
-        return tankView1;
-    }
-
-    public TankView getTankView2() {
-        return tankView2;
-    }
-
 }
 
 

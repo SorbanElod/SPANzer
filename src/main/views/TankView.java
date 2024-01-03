@@ -12,11 +12,7 @@ public class TankView {
     public TankView(Tank tank) {
         this.tank = tank;
     }
-
-    public void setTank(Tank tank) {
-        this.tank = tank;
-    }
-
+    
     private BufferedImage rotateImage() {
         int width = tank.getBaseImage().getWidth();
         int height = tank.getBaseImage().getHeight();
