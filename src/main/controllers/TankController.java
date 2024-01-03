@@ -54,6 +54,14 @@ public class TankController implements KeyListener {
         currentPos.y += vY;
         tank.setCorner(currentPos);
         tank.setAngle(angle);
+        tank.setCenter(new Point2D.Float(
+                tank.getCorner().x + (float) tank.getBaseImage().getWidth() / 2,
+                tank.getCorner().y + (float) tank.getBaseImage().getWidth() / 2)
+        );
+        tank.setTurret(new Point2D.Float(
+                (float) (tank.getCenter().x + (tank.getCannonLength() * Math.sin(Math.PI / 180 * tank.getAngle()))),
+                (float) (tank.getCenter().y - (tank.getCannonLength() * Math.cos(Math.PI / 180 * tank.getAngle())))
+        ));
     }
 
     public void spawn(Map map) {

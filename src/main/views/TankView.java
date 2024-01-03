@@ -45,6 +45,8 @@ public class TankView {
             rotatedImage = rotateImage();
             // Draw the rotated image
             g.drawImage(rotatedImage, (int) tank.getCorner().x, (int) tank.getCorner().y, null);
+            g.drawOval((int) tank.getTurret().x, (int) tank.getTurret().y,5,5);
+
         } else {
             g.drawImage(tank.getTransparentImage(), (int) tank.getCorner().x, (int) tank.getCorner().y, null);
         }
