@@ -26,17 +26,10 @@ public class MapView {
     }
 
     public void draw(Graphics g) {
-        for (int i = 0; i < map.getWidth(); i++) {
-            for (int j = 0; j < map.getHeight(); j++) {
-                Brick brick;
-                brick = map.getHorizontal(i, j);
-                if (brick != null) {
-                    drawBrick(brick, g);
-                }
-
-                brick = map.getVertical(i, j);
-                if (brick != null) {
-                    drawBrick(brick, g);
+        if(map.isGenerated()){
+            for (Brick b : map.getWalls()) {
+                if (b != null) {
+                    drawBrick(b, g);
                 }
             }
         }

@@ -14,20 +14,13 @@ import java.awt.geom.Point2D;
 import java.util.Random;
 
 public class GameController {
-    private Tank tank1;
-    private Tank tank2;
-    private TankController tc1;
-
-    private TankController tc2;
-
+    private Tank tank1, tank2;
+    private TankController tc1, tc2;
     private GamePanel gamePanel;
-    private TankView tankView1;
-    private TankView tankView2;
-
+    private TankView tankView1, tankView2;
     private Map map;
     private MapView mapView;
     private MapController mc;
-
     private int width = 10;
     private int height = 5;
 
@@ -74,8 +67,8 @@ public class GameController {
     private void startGame() {
         mc.generate();
         Random rng = new Random();
-        this.tank1 = new Tank(new Point2D.Float(rng.nextInt(0, width) * map.getBrickSize() + 20, rng.nextInt(0, height) * map.getBrickSize() + 20), rng.nextFloat(0, 360), "greenTank.png");
-        this.tank2 = new Tank(new Point2D.Float(rng.nextInt(0, width) * map.getBrickSize() + 20, rng.nextInt(0, height) * map.getBrickSize() + 20), rng.nextFloat(0, 360), "pinkTank.png");
+        tc1.spawn(map, "greenTank.png");
+        tc2.spawn(map, "pinkTank.png");
 
         tankView1.setTank(tank1);
         tankView2.setTank(tank2);

@@ -10,7 +10,6 @@ public class Tank {
     private Point2D.Float corner;
     private float angle;
     private BufferedImage baseImage;
-    private BufferedImage rotatedImage;
 
     private float moveSpeed = 3.5f;
     private int friction;
@@ -58,5 +57,4 @@ public class Tank {
     public float getAngularV() {
         return angularV;
     }
-
 }

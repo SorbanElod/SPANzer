@@ -1,44 +1,35 @@
 package main.models;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Map {
-    private List<List<Brick>> horizontals;
-    private List<List<Brick>> verticals;
-
+    private List<Brick> walls;
     int brickSize;
     int width;
     int height;
+    private boolean isGenerated;
 
     public Map(int width, int height, int brickSize) {
         this.brickSize = brickSize;
         this.width = width + 1;
         this.height = height + 1;
-        horizontals = new ArrayList<>(this.width);
-        verticals = new ArrayList<>(this.width);
+        walls = new ArrayList<>(this.width * 2);
+        isGenerated = false;
+    }
 
-        for (int i = 0; i < this.width; i++) {
-            horizontals.add(new ArrayList<>(Collections.nCopies(this.height, null)));
-            verticals.add(new ArrayList<>(Collections.nCopies(this.height, null)));
+    public void add(Brick brick) {
+        if (!walls.contains(brick)) {
+            walls.add(brick);
         }
     }
 
-    public Brick getHorizontal(int row, int col) {
-        return horizontals.get(row).get(col);
+    public void remove(Brick brick) {
+        walls.remove(brick);
     }
 
-    public void setHorizontal(int row, int col, Brick brick) {
-        horizontals.get(row).set(col, brick);
-    }
-
-    public Brick getVertical(int row, int col) {
-        return verticals.get(row).get(col);
-    }
-
-    public void setVertical(int row, int col, Brick brick) {
-        verticals.get(row).set(col, brick);
+    public List<Brick> getWalls() {
+        return walls;
     }
 
     public int getWidth() {
@@ -49,21 +40,15 @@ public class Map {
         return height;
     }
 
-    public int getBrickSize() { return brickSize; }
-
-    public List<List<Brick>> getHorizontals() {
-        return horizontals;
+    public int getBrickSize() {
+        return brickSize;
     }
 
-    public void setHorizontals(List<List<Brick>> horizontals) {
-        this.horizontals = horizontals;
+    public boolean isGenerated() {
+        return isGenerated;
     }
 
-    public List<List<Brick>> getVerticals() {
-        return verticals;
-    }
-
-    public void setVerticals(List<List<Brick>> verticals) {
-        this.verticals = verticals;
+    public void setGenerated(boolean generated) {
+        isGenerated = generated;
     }
 }
