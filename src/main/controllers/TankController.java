@@ -1,5 +1,6 @@
 package main.controllers;
 
+import main.models.Bullet;
 import main.models.Map;
 import main.models.Tank;
 
@@ -10,6 +11,7 @@ import java.util.Random;
 
 public class TankController implements KeyListener {
     private Tank tank;
+    private BulletController bc;
     private boolean forward, backward;
     private boolean left, right;
     private int player;
@@ -23,13 +25,17 @@ public class TankController implements KeyListener {
         right = false;
         this.player = player;
         rng = new Random();
+        bc = new BulletController(tank.getBullets());
     }
 
     public void updatePosition() {
+        bc.update();
         Point2D.Float currentPos = tank.getCorner();
+
         float angle = tank.getAngle();
         float vX = 0;
         float vY = 0;
+
         if (forward && backward) {
             vX = 0;
             vY = 0;
@@ -73,9 +79,14 @@ public class TankController implements KeyListener {
         tank.setSpawned(true);
     }
 
+    private void fire() {
+        Bullet bullet = new Bullet(tank.getTurret(),tank.getDirX(),tank.getDirY());
+        tank.addBullet(bullet);
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
-        //empty
+        // empty
     }
 
     @Override
@@ -85,6 +96,11 @@ public class TankController implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        if (player == 1 && e.getKeyCode() == KeyEvent.VK_M) {
+            fire();
+        } else if (player == 2 && e.getKeyCode() == KeyEvent.VK_SPACE) {
+            fire();
+        }
         handleKey(e.getKeyCode(), false);
     }
 
@@ -104,7 +120,7 @@ public class TankController implements KeyListener {
                     right = pressed;
                     break;
             }
-        } else {
+        } else if (player == 2) {
             switch (keyCode) {
                 case KeyEvent.VK_W:
                     forward = pressed;

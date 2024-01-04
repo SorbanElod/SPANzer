@@ -12,7 +12,7 @@ public class TankView {
     public TankView(Tank tank) {
         this.tank = tank;
     }
-    
+
     private BufferedImage rotateImage() {
         int width = tank.getBaseImage().getWidth();
         int height = tank.getBaseImage().getHeight();
@@ -38,6 +38,14 @@ public class TankView {
         return rotatedBmp;
     }
 
+    public void drawBullets(Graphics g){
+        tank.getBullets().forEach(bullet -> g.drawOval(
+                (int) (bullet.getCenter().x - bullet.getRadius()),
+                (int) (bullet.getCenter().y - bullet.getRadius()),
+                (int) (2 * bullet.getRadius()),
+                (int) (2 *  bullet.getRadius())
+        ));
+    }
     public void draw(Graphics g) {
         if (tank.isSpawned()) {
             BufferedImage rotatedImage;
@@ -45,8 +53,7 @@ public class TankView {
             rotatedImage = rotateImage();
             // Draw the rotated image
             g.drawImage(rotatedImage, (int) tank.getCorner().x, (int) tank.getCorner().y, null);
-            g.drawOval((int) tank.getTurret().x, (int) tank.getTurret().y,5,5);
-
+            drawBullets(g);
         } else {
             g.drawImage(tank.getTransparentImage(), (int) tank.getCorner().x, (int) tank.getCorner().y, null);
         }

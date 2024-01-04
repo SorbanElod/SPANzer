@@ -5,6 +5,8 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tank {
     private Point2D.Float corner;
@@ -14,10 +16,12 @@ public class Tank {
     private BufferedImage baseImage;
     private BufferedImage transparentImage;
     private float moveSpeed = 3.5f;
-    private int friction;
     private float angularV = 4f;
     private boolean isSpawned;
     private final int cannonLength = 30;
+    private List<Bullet> bullets;
+
+    public static final int bulletCapacity = 20;
 
     public Tank(Point2D.Float corner, float angle, String fileName) {
         this.corner = corner;
@@ -38,6 +42,17 @@ public class Tank {
                 (float) (center.y - (cannonLength * Math.cos(Math.PI / 180 * angle)))
         );
         isSpawned = false;
+        bullets = new ArrayList<>();
+    }
+
+    public void addBullet(Bullet bullet) {
+        if (bullets.size() < bulletCapacity) {
+            bullets.add(bullet);
+        }
+    }
+
+    public List<Bullet> getBullets() {
+        return bullets;
     }
 
     public Point2D.Float getCorner() {
@@ -107,5 +122,14 @@ public class Tank {
 
     public BufferedImage getTransparentImage() {
         return transparentImage;
+    }
+
+    public float getDirX() {
+        return (float) (Math.sin((angle * Math.PI / 180)));
+
+    }
+
+    public float getDirY() {
+        return -(float) (Math.cos((angle * Math.PI / 180)));
     }
 }
