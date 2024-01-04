@@ -181,6 +181,7 @@ class MazeGenerator {
     // remove a percentage of walls
     public void randomize(float ratio) {
         int demolish = (int) (map.getWalls().size() * ratio);
+        System.out.println("Ratio: " + ratio + "\nDemolished: " + demolish);
         for (int i = 0; i < demolish; i++) {
             removeRandomWall();
         }

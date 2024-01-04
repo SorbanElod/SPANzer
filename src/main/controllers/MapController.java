@@ -18,7 +18,7 @@ public class MapController {
         mg.generate();
         mg.connect();
         Random rng = new Random();
-        mg.randomize(rng.nextFloat(0.0f,0.4f));
+        mg.randomize(rng.nextFloat(0.09f,0.35f));
         map.setGenerated(true);
     }
 }
