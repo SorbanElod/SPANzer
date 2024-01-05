@@ -50,4 +50,14 @@ public class Bullet {
         center.x = x;
         center.y = y;
     }
+
+    public void setvX(float vX) {
+        this.vX = vX;
+    }
+
+    public void setvY(float vY) {
+        this.vY = vY;
+    }
+
+
 }

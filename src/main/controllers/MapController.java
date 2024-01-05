@@ -14,6 +14,7 @@ public class MapController {
     // add all possible wall segments (aka. bricks)
     public void generate() {
         map.setGenerated(false);
+        map.clear();
         MazeGenerator mg = new MazeGenerator(map);
         mg.generate();
         mg.connect();

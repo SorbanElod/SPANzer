@@ -51,4 +51,8 @@ public class Map {
     public void setGenerated(boolean generated) {
         isGenerated = generated;
     }
+
+    public void clear() {
+        walls = new ArrayList<>(this.width * 2);
+    }
 }

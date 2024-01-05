@@ -21,7 +21,7 @@ public class Tank {
     private final int cannonLength = 30;
     private List<Bullet> bullets;
 
-    public static final int bulletCapacity = 20;
+    public static final int bulletCapacity = 5;
 
     public Tank(Point2D.Float corner, float angle, String fileName) {
         this.corner = corner;
@@ -131,5 +131,9 @@ public class Tank {
 
     public float getDirY() {
         return -(float) (Math.cos((angle * Math.PI / 180)));
+    }
+
+    public void disposeBullets() {
+        bullets.clear();
     }
 }

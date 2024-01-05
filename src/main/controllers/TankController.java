@@ -76,6 +76,7 @@ public class TankController implements KeyListener {
                 rng.nextInt(0, map.getHeight() - 1) * map.getBrickSize() + 20
         ));
         tank.setAngle(rng.nextFloat(0, 360));
+        tank.disposeBullets();
         tank.setSpawned(true);
     }
 

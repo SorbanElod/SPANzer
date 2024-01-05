@@ -20,6 +20,7 @@ public class GameController {
     private Map map;
     private MapView mapView;
     private MapController mc;
+    private CollisionDetector cd;
     private final int width = 10;
     private final int height = 5;
 
@@ -31,9 +32,22 @@ public class GameController {
         Timer timer = new Timer(delay, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                tc1.updatePosition();
-                tc2.updatePosition();
-                gamePanel.repaint();
+
+                if(t1.isSpawned() && t2.isSpawned()){
+                    cd.BulletCollisionWithWalls();
+                    cd.BulletCollisionWithTank();
+                    tc1.updatePosition();
+                    tc2.updatePosition();
+                    gamePanel.repaint();
+                }
+                else{
+                    startGame();
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
             }
         });
         timer.start();
@@ -53,6 +67,8 @@ public class GameController {
         this.mapView = new MapView(map);
         this.mc = new MapController(map);
 
+        cd = new CollisionDetector(t1, t2, map);
+
         this.gamePanel = new GamePanel(tv1, tv2, mapView);
         GameFrame gameFrame = new GameFrame(gamePanel);
 
@@ -67,7 +83,7 @@ public class GameController {
         mc.generate();
         tc1.spawn(map);
         tc2.spawn(map);
-        while(t1.getCorner() == t2.getCorner()){
+        while (t1.getCorner().distance(t2.getCorner()) < map.getBrickSize()) {
             tc2.spawn(map);
         }
     }

@@ -75,8 +75,8 @@ class MazeGenerator {
 
         List<Brick> bricksToRemove = new ArrayList<>();
         for (Brick b : map.getWalls()) {
-            int startX = Math.min(b.getStartPoint().x, b.getEndPoint().x) / map.getBrickSize();
-            int startY = Math.min(b.getStartPoint().y, b.getEndPoint().y) / map.getBrickSize();
+            int startX = Math.min(b.getStart().x, b.getEnd().x) / map.getBrickSize();
+            int startY = Math.min(b.getStart().y, b.getEnd().y) / map.getBrickSize();
             if ((startX == 0 && b.isVertical()) || (startY == 0) && b.isHorizontal()) {
                 continue;
             }
@@ -181,7 +181,6 @@ class MazeGenerator {
     // remove a percentage of walls
     public void randomize(float ratio) {
         int demolish = (int) (map.getWalls().size() * ratio);
-        System.out.println("Ratio: " + ratio + "\nDemolished: " + demolish);
         for (int i = 0; i < demolish; i++) {
             removeRandomWall();
         }

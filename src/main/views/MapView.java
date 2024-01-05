@@ -18,10 +18,10 @@ public class MapView {
 
         g2d.setStroke(new BasicStroke(wallWidth));
         g2d.drawLine(
-                wallWidth + b.getStartPoint().x,
-                wallWidth + b.getStartPoint().y,
-                wallWidth + b.getEndPoint().x,
-                wallWidth + b.getEndPoint().y);
+                wallWidth + b.getStart().x,
+                wallWidth + b.getStart().y,
+                wallWidth + b.getEnd().x,
+                wallWidth + b.getEnd().y);
     }
 
     public void draw(Graphics g) {
