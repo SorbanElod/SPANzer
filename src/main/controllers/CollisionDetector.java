@@ -10,8 +10,8 @@ import java.util.stream.Stream;
 public class CollisionDetector {
     private final Tank tank1, tank2;
     private final Map map;
-
-    private static final int hitBoxRadius = 20;
+    private final float friction = 0.44f;
+    private static final int hitBoxRadius = 25;
 
     public CollisionDetector(Tank tank1, Tank tank2, Map map) {
         this.tank1 = tank1;
@@ -100,6 +100,75 @@ public class CollisionDetector {
                 }
             }
         }
+    }
 
+    public void tankCollisionWithWalls() {
+        tankCollisionWithWalls(this.tank1);
+        tankCollisionWithWalls(this.tank2);
+    }
+
+    private void tankCollisionWithWalls(Tank tank) {
+        map.getWalls().forEach(brick ->
+        {
+            float Vx = 1;
+            float Vy = 1;
+            if (brick.isHorizontal()) {
+                //check if tank can collide with wall's side
+                if (tank.getCorner().x + tank.getImgSize() >= brick.getStart().x && tank.getCorner().x <= brick.getEnd().x) {
+                    //collision with the wall above
+                    if (tank.getCorner().y > brick.getStart().y && tank.getCorner().y + tank.getvY() < brick.getStart().y) {
+                        Vy = 0;
+                        Vx *= friction;
+                    }
+                    //collision with the wall below
+                    if (tank.getCorner().y + tank.getImgSize() < brick.getStart().y && tank.getCorner().y + tank.getImgSize() + tank.getvY() > brick.getStart().y) {
+                        Vy = 0;
+                        Vx *= friction;
+                    }
+                }
+                //checks if tank can collide with the walls end
+                if (tank.getCorner().y < brick.getStart().y && tank.getCorner().y + tank.getImgSize() > brick.getStart().y) {
+                    //collision with the right end
+                    if (tank.getCorner().x > brick.getEnd().x && tank.getCorner().x + tank.getvX() < brick.getEnd().x) {
+                        Vx = 0;
+                        Vy *= friction;
+                    }
+                    //collision with the left end
+                    if (tank.getCorner().x + tank.getImgSize() < brick.getStart().x && tank.getCorner().x + tank.getImgSize() + tank.getvX() > brick.getStart().x) {
+                        Vx = 0;
+                        Vy *= friction;
+                    }
+                }
+            } else if (brick.isVertical()) {
+                //check if tank can collide with wall's side
+                if (tank.getCorner().y + tank.getImgSize() >= brick.getStart().y && tank.getCorner().y <= brick.getEnd().y) {
+                    //collision with the wall from right
+                    if (tank.getCorner().x > brick.getStart().x && tank.getCorner().x + tank.getvX() < brick.getStart().x) {
+                        Vx = 0;
+                        Vy *= friction;
+                    }
+                    //collision with the wall from left
+                    if (tank.getCorner().x + tank.getImgSize() < brick.getStart().x && tank.getCorner().x + tank.getImgSize() + tank.getvX() > brick.getStart().x) {
+                        Vx = 0;
+                        Vy *= friction;
+                    }
+                }
+                //checks if tank can collide with the walls end
+                if (tank.getCorner().x < brick.getStart().x && tank.getCorner().x + tank.getImgSize() > brick.getStart().x) {
+                    //collision with the bottom end
+                    if (tank.getCorner().y > brick.getEnd().y && tank.getCorner().y + tank.getvY() < brick.getEnd().y) {
+                        Vy = 0;
+                        Vx *= friction;
+                    }
+                    //collision with top end
+                    if (tank.getCorner().y + tank.getImgSize() < brick.getStart().y && tank.getCorner().y + tank.getImgSize() + tank.getvY() > brick.getStart().y) {
+                        Vy = 0;
+                        Vx *= friction;
+                    }
+                }
+            }
+            tank.setvXWeight(Vx);
+            tank.setvYWeight(Vy);
+        });
     }
 }

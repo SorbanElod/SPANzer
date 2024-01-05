@@ -16,10 +16,9 @@ public class TankView {
     private BufferedImage rotateImage() {
         int width = tank.getBaseImage().getWidth();
         int height = tank.getBaseImage().getHeight();
-        double scaleFactor = 1.0;
         BufferedImage rotatedBmp = new BufferedImage(
-                (int) (width * scaleFactor),
-                (int) (height * scaleFactor),
+                (int) (width * tank.scaleFactor),
+                (int) (height * tank.scaleFactor),
                 BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = rotatedBmp.createGraphics();
 
@@ -28,7 +27,7 @@ public class TankView {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         AffineTransform transform = new AffineTransform();
-        transform.scale(scaleFactor, scaleFactor);
+        transform.scale(tank.scaleFactor, tank.scaleFactor);
         transform.rotate(Math.toRadians(tank.getAngle()), width / 2.0, height / 2.0);
 
         g.transform(transform);
@@ -38,14 +37,15 @@ public class TankView {
         return rotatedBmp;
     }
 
-    public void drawBullets(Graphics g){
+    public void drawBullets(Graphics g) {
         tank.getBullets().forEach(bullet -> g.drawOval(
                 (int) (bullet.getCenter().x - bullet.getRadius()),
                 (int) (bullet.getCenter().y - bullet.getRadius()),
                 (int) (2 * bullet.getRadius()),
-                (int) (2 *  bullet.getRadius())
+                (int) (2 * bullet.getRadius())
         ));
     }
+
     public void draw(Graphics g) {
         if (tank.isSpawned()) {
             BufferedImage rotatedImage;
@@ -57,7 +57,5 @@ public class TankView {
         } else {
             g.drawImage(tank.getTransparentImage(), (int) tank.getCorner().x, (int) tank.getCorner().y, null);
         }
-
     }
-
 }

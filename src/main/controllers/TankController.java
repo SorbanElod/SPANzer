@@ -56,6 +56,16 @@ public class TankController implements KeyListener {
         if (angle < 0) {
             angle = 360 - angle;
         }
+
+        tank.setvX(vX);
+        tank.setvY(vY);
+        // this is the collision modifier
+        // if 1, no collision, if 0, then the entire direction is blocked
+        // everything between 1 and 0 is friction with walls or other tanks
+        vX *= tank.getvXWeight();
+        vY *= tank.getvYWeight();
+
+        System.out.println(tank.getvXWeight());
         currentPos.x += vX;
         currentPos.y += vY;
         tank.setCorner(currentPos);
@@ -76,7 +86,7 @@ public class TankController implements KeyListener {
                 rng.nextInt(0, map.getHeight() - 1) * map.getBrickSize() + 20
         ));
         tank.setAngle(rng.nextFloat(0, 360));
-        tank.disposeBullets();
+        tank.getBullets().clear();
         tank.setSpawned(true);
     }
 

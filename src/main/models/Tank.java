@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tank {
+    public double scaleFactor = 1.0;
     private Point2D.Float corner;
     private Point2D.Float center;
     private Point2D.Float turret;
@@ -20,8 +21,11 @@ public class Tank {
     private boolean isSpawned;
     private final int cannonLength = 30;
     private List<Bullet> bullets;
-
     public static final int bulletCapacity = 5;
+    private float vXWeight;
+    private float vYWeight;
+    private float vX;
+    private float vY;
 
     public Tank(Point2D.Float corner, float angle, String fileName) {
         this.corner = corner;
@@ -49,6 +53,38 @@ public class Tank {
         if (bullets.size() < bulletCapacity) {
             bullets.add(bullet);
         }
+    }
+
+    public void setvX(float vX) {
+        this.vX = vX;
+    }
+
+    public void setvY(float vY) {
+        this.vY = vY;
+    }
+
+    public float getvX() {
+        return vX;
+    }
+
+    public float getvY() {
+        return vY;
+    }
+
+    public float getvXWeight() {
+        return vXWeight;
+    }
+
+    public void setvXWeight(float vXWeight) {
+        this.vXWeight = vXWeight;
+    }
+
+    public float getvYWeight() {
+        return vYWeight;
+    }
+
+    public void setvYWeight(float vYWeight) {
+        this.vYWeight = vYWeight;
     }
 
     public List<Bullet> getBullets() {
@@ -129,11 +165,11 @@ public class Tank {
 
     }
 
-    public float getDirY() {
-        return -(float) (Math.cos((angle * Math.PI / 180)));
+    public int getImgSize() {
+        return (int) (baseImage.getWidth() * scaleFactor);
     }
 
-    public void disposeBullets() {
-        bullets.clear();
+    public float getDirY() {
+        return -(float) (Math.cos((angle * Math.PI / 180)));
     }
 }
