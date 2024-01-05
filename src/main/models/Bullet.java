@@ -50,11 +50,11 @@ public class Bullet {
         center.y = y;
     }
 
-    public void invetX() {
+    public void invertX() {
         this.vX = -this.vX;
     }
 
-    public void invetY() {
+    public void invertY() {
         this.vY = -this.vY;
     }
 
