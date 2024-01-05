@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 import java.time.Duration;
 import java.time.LocalTime;
 
-import static java.time.Duration.*;
+import static java.time.Duration.ofSeconds;
 
 public class Bullet {
     private final float radius = 2.5f;
@@ -12,7 +12,6 @@ public class Bullet {
     private float vX, vY;
     private Point2D.Float center;
     private LocalTime created;
-
     private final Duration lifetime = ofSeconds(5);
 
     public Bullet(Point2D.Float center, float dX, float dY) {
@@ -51,12 +50,12 @@ public class Bullet {
         center.y = y;
     }
 
-    public void setvX(float vX) {
-        this.vX = vX;
+    public void invetX() {
+        this.vX = -this.vX;
     }
 
-    public void setvY(float vY) {
-        this.vY = vY;
+    public void invetY() {
+        this.vY = -this.vY;
     }
 
 

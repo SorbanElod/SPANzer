@@ -1,17 +1,22 @@
 package main.models;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class Brick {
     private Point start;
     private Point end;
     private boolean isHorizontal;
+    private Rectangle2D rectangle;
     public final static int wallWidth = 5;
 
     public Brick(Point start, Point end) {
         this.start = start;
         this.end = end;
         isHorizontal = (this.start.y == this.end.y);
+        int width = end.x - start.x;
+        int height = end.y - start.y;
+        rectangle = new Rectangle2D.Float(wallWidth + start.x, wallWidth + start.y, width, height);
     }
 
     public Brick(int x1, int y1, int x2, int y2) {
@@ -24,6 +29,10 @@ public class Brick {
 
     public Point getEnd() {
         return end;
+    }
+
+    public Rectangle2D getRectangle() {
+        return rectangle;
     }
 
     public boolean isHorizontal() {

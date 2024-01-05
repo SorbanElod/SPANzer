@@ -34,10 +34,10 @@ public class GameController {
             public void actionPerformed(ActionEvent e) {
 
                 if(t1.isSpawned() && t2.isSpawned()){
-                    cd.BulletCollisionWithWalls();
-                    cd.BulletCollisionWithTank();
+                    cd.bulletCollisionWithTank();
                     tc1.updatePosition();
                     tc2.updatePosition();
+                    cd.bulletCollisionWithWalls();
                     gamePanel.repaint();
                 }
                 else{

@@ -1,107 +1,99 @@
 package main.controllers;
 
+import main.models.Brick;
+import main.models.Bullet;
 import main.models.Map;
 import main.models.Tank;
 
-import java.util.stream.Stream;
-
 public class CollisionDetector {
-    private Tank t1, t2;
-    private Map map;
+    private final Tank tank1, tank2;
+    private final Map map;
 
-    private static int hitBoxRadius = 20;
+    private static final int hitBoxRadius = 20;
 
-    public CollisionDetector(Tank t1, Tank t2, Map map) {
-        this.t1 = t1;
-        this.t2 = t2;
+    public CollisionDetector(Tank tank1, Tank tank2, Map map) {
+        this.tank1 = tank1;
+        this.tank2 = tank2;
         this.map = map;
     }
 
-    public void BulletCollisionWithTank()
-    {
-        //√[(x₂ - x₁)² + (y₂ - y₁)²]
-        //checks the distance between the target tank, and the selected ball
-        //if the distance is smaller than the hitbox radius, then the tank is hit
-        Stream.concat(t1.getBullets().stream(),t2.getBullets().stream()).forEach(bullet -> {
-            if(Math.sqrt(Math.pow((bullet.getCenter().x - t1.getCenter().x), 2)+ Math.pow((bullet.getCenter().y - t1.getCenter().y), 2)) <= hitBoxRadius)
-            {
-                t1.setSpawned(false);
-            }
-            if(Math.sqrt(Math.pow((bullet.getCenter().x - t2.getCenter().x), 2)+ Math.pow((bullet.getCenter().y - t2.getCenter().y), 2)) <= hitBoxRadius)
-            {
-                t2.setSpawned(false);
-            }
-        });
-
+    public void bulletCollisionWithTank() {
+        checkBulletCollisionWithTank(tank1);
+        checkBulletCollisionWithTank(tank2);
     }
 
-    public void BulletCollisionWithWalls() {
-        Stream.concat(t1.getBullets().stream(),t2.getBullets().stream()).forEach(b -> {
-            map.getWalls().stream().forEach(w -> {
-                if (w.isHorizontal())
-                {
-                    //check if bullet can collide with wall's side
-                    if (b.getCenter().x >= w.getStart().x && b.getCenter().x <= w.getEnd().x)
-                    {
-                        //collision with the wall above
-                        if (b.getCenter().y >= w.getStart().y && b.getCenter().y + b.getvY() <= w.getStart().y)
-                        {
-                            b.setvY(-b.getvY());
-                        }
-                        //collision with the wall below
-                        if (b.getCenter().y <= w.getStart().y && b.getCenter().y + b.getvY() >= w.getStart().y)
-                        {
-                            b.setvY(-b.getvY());
-                        }
-                    }
-                    //checks if bullet can collide with the walls end
-                    if (b.getCenter().y - b.getRadius() <= w.getStart().y && b.getCenter().y + b.getRadius() >= w.getStart().y)
-                    {
-                        //collision with the right end
-                        if (b.getCenter().x >= w.getEnd().x && b.getCenter().x + b.getvX() <= w.getEnd().x)
-                        {
-                            b.setvX(-b.getvX());
-                        }
-                        //collision with the left end
-                        if (b.getCenter().x <= w.getStart().x && b.getCenter().x + b.getvX() >= w.getStart().x)
-                        {
-                            b.setvX(-b.getvX());
-                        }
-                    }
-                }
-                else if (w.isVertical())
-                {
-                    //check if bullet can collide with wall's side
-                    if (b.getCenter().y >= w.getStart().y && b.getCenter().y <= w.getEnd().y)
-                    {
-                        //collision with the wall from right
-                        if (b.getCenter().x >= w.getStart().x && b.getCenter().x + b.getvX() <= w.getStart().x)
-                        {
-                            b.setvX(-b.getvX());
-                        }
-                        //collision with the wall from left
-                        if (b.getCenter().x <= w.getStart().x && b.getCenter().x + b.getvX() >= w.getStart().x)
-                        {
-                            b.setvX(-b.getvX());
-                        }
-                    }
-                    //checks if bullet can collide with the walls end
-                    if (b.getCenter().x - b.getRadius() <= w.getStart().x && b.getCenter().x + b.getRadius() >= w.getStart().x)
-                    {
-                        //collision with the bottom end
-                        if (b.getCenter().y >= w.getEnd().y && b.getCenter().y + b.getvY() <= w.getEnd().y)
-                        {
-                            b.setvY(-b.getvY());
-                        }
-                        //collision with top end
-                        if (b.getCenter().y <= w.getStart().y && b.getCenter().y + b.getvY() >= w.getStart().y)
-                        {
-                            b.setvY(-b.getvY());
-                        }
-                    }
-                }
-            });
+    private void checkBulletCollisionWithTank(Tank tank) {
+        tank.getBullets().forEach(bullet -> {
+            if (calculateDistance(bullet, tank) <= hitBoxRadius) {
+                tank.setSpawned(false);
+            }
         });
     }
 
+    public void bulletCollisionWithWalls() {
+        tank1.getBullets().forEach(this::checkBulletCollisionWithWalls);
+        tank2.getBullets().forEach(this::checkBulletCollisionWithWalls);
+    }
+
+    private void checkBulletCollisionWithWalls(Bullet bullet) {
+        map.getWalls().stream()
+                .filter(brick -> (brick.getStart().distance(bullet.getCenter()) < 2 * map.getBrickSize()))
+                .forEach(brick -> legacyBulletWithWallCollisionChecker(brick, bullet));
+    }
+
+    private void legacyBulletWithWallCollisionChecker(Brick brick, Bullet bullet) {
+        if (brick.isHorizontal()) {
+            //check if bullet can collide with wall's side
+            if (bullet.getCenter().x >= brick.getStart().x && bullet.getCenter().x <= brick.getEnd().x) {
+                //collision with the wall above
+                if (bullet.getCenter().y >= brick.getStart().y && bullet.getCenter().y + bullet.getvY() <= brick.getStart().y) {
+                    bullet.invetY();
+                }
+                //collision with the wall below
+                if (bullet.getCenter().y <= brick.getStart().y && bullet.getCenter().y + bullet.getvY() >= brick.getStart().y) {
+                    bullet.invetY();
+                }
+            }
+            //checks if bullet can collide with the walls end
+            if (bullet.getCenter().y - bullet.getRadius() <= brick.getStart().y && bullet.getCenter().y + bullet.getRadius() >= brick.getStart().y) {
+                //collision with the right end
+                if (bullet.getCenter().x >= brick.getEnd().x && bullet.getCenter().x + bullet.getvX() <= brick.getEnd().x) {
+                    bullet.invetX();
+                }
+                //collision with the left end
+                if (bullet.getCenter().x <= brick.getStart().x && bullet.getCenter().x + bullet.getvX() >= brick.getStart().x) {
+                    bullet.invetX();
+                }
+            }
+        } else if (brick.isVertical()) {
+            //check if bullet can collide with wall's side
+            if (bullet.getCenter().y >= brick.getStart().y && bullet.getCenter().y <= brick.getEnd().y) {
+                //collision with the wall from right
+                if (bullet.getCenter().x >= brick.getStart().x && bullet.getCenter().x + bullet.getvX() <= brick.getStart().x) {
+                    bullet.invetX();
+                }
+                //collision with the wall from left
+                if (bullet.getCenter().x <= brick.getStart().x && bullet.getCenter().x + bullet.getvX() >= brick.getStart().x) {
+                    bullet.invetX();
+                }
+            }
+            //checks if bullet can collide with the walls end
+            if (bullet.getCenter().x - bullet.getRadius() <= brick.getStart().x && bullet.getCenter().x + bullet.getRadius() >= brick.getStart().x) {
+                //collision with the bottom end
+                if (bullet.getCenter().y >= brick.getEnd().y && bullet.getCenter().y + bullet.getvY() <= brick.getEnd().y) {
+                    bullet.invetY();
+                }
+                //collision with top end
+                if (bullet.getCenter().y <= brick.getStart().y && bullet.getCenter().y + bullet.getvY() >= brick.getStart().y) {
+                    bullet.invetY();
+                }
+            }
+        }
+
+    }
+
+    private double calculateDistance(Bullet bullet, Tank tank) {
+        return Math.sqrt(Math.pow((bullet.getCenter().x - tank.getCenter().x), 2) +
+                Math.pow((bullet.getCenter().y - tank.getCenter().y), 2));
+    }
 }
