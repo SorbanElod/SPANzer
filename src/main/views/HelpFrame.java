@@ -7,7 +7,7 @@ public class HelpFrame extends JFrame {
 
     public HelpFrame() {
         // Set the frame properties
-        setTitle("Tank Battle Help Guide");
+        setTitle("SPANzer Help Guide");
         setSize(1280, 720);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 

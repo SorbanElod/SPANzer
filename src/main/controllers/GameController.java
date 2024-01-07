@@ -22,8 +22,6 @@ public class GameController {
     private final int width = 10;
     private final int height = 5;
 
-    private int p1Score, p2Score;
-
     public GameController() {
         initGame();
         startGame();
@@ -56,15 +54,13 @@ public class GameController {
     }
 
     private void endGame() {
-        if (!t1.isSpawned()) sp.updateP2Score(++p2Score);
-        if (!t2.isSpawned()) sp.updateP1Score(++p1Score);
+        if (!t1.isSpawned()) sp.setP2Score(sp.getP2Score() + 1);
+        if (!t2.isSpawned()) sp.setP1Score(sp.getP1Score() + 1);
         t1.getBullets().clear();
         t2.getBullets().clear();
     }
 
     private void initGame() {
-        p1Score = 0;
-        p2Score = 0;
         sp = new StatPanel();
         this.t1 = new Tank(new Point2D.Float(0, 0), 0, "greenTank.png");
         this.t2 = new Tank(new Point2D.Float(0, 0), 0, "pinkTank.png");
@@ -99,14 +95,6 @@ public class GameController {
         while (t1.getCorner().distance(t2.getCorner()) < 2 * map.getBrickSize()) {
             tc2.spawn(map);
         }
-    }
-
-    public int getP1Score() {
-        return p1Score;
-    }
-
-    public int getP2Score() {
-        return p2Score;
     }
 }
 

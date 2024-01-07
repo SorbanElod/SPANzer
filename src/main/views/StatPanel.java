@@ -22,11 +22,19 @@ public class StatPanel extends JPanel {
         this.add(p2Label);
     }
 
-    public void updateP1Score(int score) {
+    public void setP1Score(int score) {
         p1Label.setText(String.valueOf(score));
     }
 
-    public void updateP2Score(int score) {
+    public void setP2Score(int score) {
         p2Label.setText(String.valueOf(score));
+    }
+
+    public int getP1Score(){
+        return Integer.parseInt(p1Label.getText());
+    }
+
+    public int getP2Score(){
+        return Integer.parseInt(p2Label.getText());
     }
 }

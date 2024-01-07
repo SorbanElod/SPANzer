@@ -8,7 +8,7 @@ import static java.time.Duration.ofSeconds;
 
 public class Bullet {
     private final float radius = 2.5f;
-    private final float speed = 5f;
+    private final float speed = 6f;
     private float vX, vY;
     private Point2D.Float center;
     private LocalTime created;
