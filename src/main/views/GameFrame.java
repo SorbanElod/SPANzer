@@ -13,12 +13,12 @@ public class GameFrame extends JFrame {
     private Tank t1;
     private Tank t2;
 
-    public GameFrame(GamePanel gamePanel) {
-        this(gamePanel, 1280, 720);
+    public GameFrame(GamePanel gamePanel, StatPanel sp) {
+        this(gamePanel, sp, 1280, 720);
     }
 
     // Parameterized constructor
-    public GameFrame(GamePanel gamePanel, int width, int height) {
+    public GameFrame(GamePanel gamePanel, StatPanel sp, int width, int height) {
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
@@ -29,6 +29,7 @@ public class GameFrame extends JFrame {
         mapPanel.add(gamePanel);
 
         this.add(mapPanel, BorderLayout.CENTER);
+        this.add(sp, BorderLayout.SOUTH);
         this.setVisible(true);
     }
 

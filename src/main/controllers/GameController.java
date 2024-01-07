@@ -2,10 +2,7 @@ package main.controllers;
 
 import main.models.Map;
 import main.models.Tank;
-import main.views.GameFrame;
-import main.views.GamePanel;
-import main.views.MapView;
-import main.views.TankView;
+import main.views.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -20,9 +17,12 @@ public class GameController {
     private Map map;
     private MapView mapView;
     private MapController mc;
+    private StatPanel sp;
     private CollisionDetector cd;
     private final int width = 10;
     private final int height = 5;
+
+    private int p1Score, p2Score;
 
     public GameController() {
         initGame();
@@ -33,7 +33,7 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if(t1.isSpawned() && t2.isSpawned()){
+                if (t1.isSpawned() && t2.isSpawned()) {
                     cd.bulletCollisionWithTank();
                     cd.tankCollisionWithWalls();
                     cd.bulletCollisionWithWalls();
@@ -41,8 +41,7 @@ public class GameController {
                     tc1.updatePosition();
                     tc2.updatePosition();
                     gamePanel.repaint();
-                }
-                else{
+                } else {
                     endGame();
                     startGame();
                     try {
@@ -56,11 +55,17 @@ public class GameController {
         timer.start();
     }
 
-    private void endGame(){
+    private void endGame() {
+        if (!t1.isSpawned()) sp.updateP2Score(++p2Score);
+        if (!t2.isSpawned()) sp.updateP1Score(++p1Score);
         t1.getBullets().clear();
         t2.getBullets().clear();
     }
+
     private void initGame() {
+        p1Score = 0;
+        p2Score = 0;
+        sp = new StatPanel();
         this.t1 = new Tank(new Point2D.Float(0, 0), 0, "greenTank.png");
         this.t2 = new Tank(new Point2D.Float(0, 0), 0, "pinkTank.png");
 
@@ -77,7 +82,7 @@ public class GameController {
         cd = new CollisionDetector(t1, t2, map);
 
         this.gamePanel = new GamePanel(tv1, tv2, mapView);
-        GameFrame gameFrame = new GameFrame(gamePanel);
+        GameFrame gameFrame = new GameFrame(gamePanel, sp);
 
         gameFrame.addKeyListener(tc1);
         gameFrame.addKeyListener(tc2);
@@ -86,6 +91,7 @@ public class GameController {
         gameFrame.requestFocusInWindow();
     }
 
+
     private void startGame() {
         mc.generate();
         tc1.spawn(map);
@@ -93,6 +99,14 @@ public class GameController {
         while (t1.getCorner().distance(t2.getCorner()) < 2 * map.getBrickSize()) {
             tc2.spawn(map);
         }
+    }
+
+    public int getP1Score() {
+        return p1Score;
+    }
+
+    public int getP2Score() {
+        return p2Score;
     }
 }
 

@@ -65,7 +65,6 @@ public class TankController implements KeyListener {
         vX *= tank.getvXWeight();
         vY *= tank.getvYWeight();
 
-        System.out.println(tank.getvXWeight());
         currentPos.x += vX;
         currentPos.y += vY;
         tank.setCorner(currentPos);
