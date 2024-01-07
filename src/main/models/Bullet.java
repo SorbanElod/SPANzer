@@ -12,7 +12,7 @@ public class Bullet {
     private float vX, vY;
     private Point2D.Float center;
     private LocalTime created;
-    private final Duration lifetime = ofSeconds(5);
+    private final Duration lifetime = ofSeconds(7);
 
     public Bullet(Point2D.Float center, float dX, float dY) {
         this.center = center;

@@ -16,7 +16,7 @@ public class Tank {
     private float angle;
     private BufferedImage baseImage;
     private BufferedImage transparentImage;
-    private float moveSpeed = 3.5f;
+    private float moveSpeed = 3.7f;
     private float angularV = 4f;
     private boolean isSpawned;
     private final int cannonLength = 30;
