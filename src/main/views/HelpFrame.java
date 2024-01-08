@@ -19,13 +19,13 @@ public class HelpFrame extends JFrame {
 
         // Insert the Tank Battle Help Guide content
         String guideContent = "<html><body>" +
-                "<h1>Tank Battle Help Guide</h1>" +
+                "<h1>SPANzer Help Guide</h1>" +
                 "<ol>" +
                 "<li><h3>Objective:</h3> Your primary goal is to outmaneuver and destroy enemy tanks while surviving the chaos of the battlefield. Be the last tank standing to claim victory!</li>" +
                 "<li><h3>Controls:</h3>" +
                 "<ul>" +
-                "<li>Movement: Arrow keys or W, A, S, D keys</li>" +
-                "<li>Shoot: M key or Spacebar</li>" +
+                "<li>P1: Arrow keys and Q</li>" +
+                "<li>P2: W, A, S, D keys and M</li>" +
                 "</ul></li>" +
                 "<li><h3>Gameplay Tips:</h3>" +
                 "<ul>" +

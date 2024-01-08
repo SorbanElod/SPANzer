@@ -111,7 +111,7 @@ public class TankController implements KeyListener {
     public void keyReleased(KeyEvent e) {
         if (player == 1 && e.getKeyCode() == KeyEvent.VK_M) {
             fire();
-        } else if (player == 2 && e.getKeyCode() == KeyEvent.VK_SPACE) {
+        } else if (player == 2 && e.getKeyCode() == KeyEvent.VK_Q) {
             fire();
         }
         handleKey(e.getKeyCode(), false);

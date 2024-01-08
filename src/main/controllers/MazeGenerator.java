@@ -12,6 +12,7 @@ class MazeGenerator {
     private final Map map;
     private List<Cell> cells;
     private List<Set<Cell>> sets;
+
     public MazeGenerator(Map map) {
         this.map = map;
         this.cols = map.getWidth() - 1;
@@ -177,14 +178,6 @@ class MazeGenerator {
         Cell(int x, int y) {
             this.x = x;
             this.y = y;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
         }
     }
 }

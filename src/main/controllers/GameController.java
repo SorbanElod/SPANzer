@@ -13,8 +13,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class GameController {
-    private final int width = 10;
-    private final int height = 5;
+    private final int width = 11;
+    private final int height = 6;
     private Tank t1, t2;
     private TankController tc1, tc2;
     private TankView tv1, tv2;
