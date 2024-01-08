@@ -10,12 +10,12 @@ import java.util.List;
 
 public class Tank {
     public static final int bulletCapacity = 5;
+    public final double scaleFactor = 1.0;
     private final BufferedImage transparentImage;
     private final float moveSpeed = 5f;
     private final float angularV = 5f;
     private final int cannonLength = 30;
     private final List<Bullet> bullets;
-    public double scaleFactor = 1.0;
     private Point2D.Float corner;
     private Point2D.Float center;
     private Point2D.Float turret;

@@ -59,7 +59,7 @@ public class GameFrame extends JFrame {
         saveMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String content = "";
+                String content;
                 content = "Player1: " + sp.getP1Score() + "\n" +
                         "Player2: " + sp.getP2Score() + "\n";
                 saveToFile(content);

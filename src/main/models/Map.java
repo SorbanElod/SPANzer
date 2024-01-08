@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Map {
+    final int brickSize;
+    final int width;
+    final int height;
     private List<Brick> walls;
-    int brickSize;
-    int width;
-    int height;
     private boolean isGenerated;
 
     public Map(int width, int height, int brickSize) {
