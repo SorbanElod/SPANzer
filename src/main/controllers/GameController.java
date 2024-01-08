@@ -4,12 +4,17 @@ import main.models.Map;
 import main.models.Tank;
 import main.views.*;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.IOException;
 
 public class GameController {
+    private final int width = 10;
+    private final int height = 5;
     private Tank t1, t2;
     private TankController tc1, tc2;
     private TankView tv1, tv2;
@@ -19,8 +24,6 @@ public class GameController {
     private MapController mc;
     private StatPanel sp;
     private CollisionDetector cd;
-    private final int width = 10;
-    private final int height = 5;
 
     public GameController() {
         initGame();
@@ -33,7 +36,6 @@ public class GameController {
 
                 if (t1.isSpawned() && t2.isSpawned()) {
                     cd.bulletCollisionWithTank();
-                    cd.tankCollisionWithWalls();
                     cd.bulletCollisionWithWalls();
 
                     tc1.updatePosition();
@@ -54,6 +56,7 @@ public class GameController {
     }
 
     private void endGame() {
+        explode();
         if (!t1.isSpawned()) sp.setP2Score(sp.getP2Score() + 1);
         if (!t2.isSpawned()) sp.setP1Score(sp.getP1Score() + 1);
         t1.getBullets().clear();
@@ -61,6 +64,7 @@ public class GameController {
     }
 
     private void initGame() {
+        startMusic();
         sp = new StatPanel();
         this.t1 = new Tank(new Point2D.Float(0, 0), 0, "greenTank.png");
         this.t2 = new Tank(new Point2D.Float(0, 0), 0, "pinkTank.png");
@@ -68,14 +72,14 @@ public class GameController {
         this.tv1 = new TankView(t1);
         this.tv2 = new TankView(t2);
 
-        this.tc1 = new TankController(t1, 1);
-        this.tc2 = new TankController(t2, 2);
-
         this.map = new Map(width, height, 100);
         this.mapView = new MapView(map);
         this.mc = new MapController(map);
 
         cd = new CollisionDetector(t1, t2, map);
+
+        this.tc1 = new TankController(t1, 1, cd);
+        this.tc2 = new TankController(t2, 2, cd);
 
         this.gamePanel = new GamePanel(tv1, tv2, mapView);
         GameFrame gameFrame = new GameFrame(gamePanel, sp);
@@ -95,6 +99,35 @@ public class GameController {
         while (t1.getCorner().distance(t2.getCorner()) < 2 * map.getBrickSize()) {
             tc2.spawn(map);
         }
+    }
+
+    private void startMusic() {
+        Clip musicClip;
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/resources/sound/music/rentedstuff.wav"));
+            musicClip = AudioSystem.getClip();
+            musicClip.open(audioInputStream);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+        Thread thread = new Thread(() -> {
+            musicClip.start();
+            musicClip.loop(Integer.MAX_VALUE);
+        });
+        thread.start();
+    }
+
+    private void explode() {
+        Clip explosionClip;
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/resources/sound/sfx/explosion.wav"));
+            explosionClip = AudioSystem.getClip();
+            explosionClip.open(audioInputStream);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+        Thread thread = new Thread(explosionClip::start);
+        thread.start();
     }
 }
 

@@ -5,7 +5,7 @@ import main.models.Map;
 import java.util.Random;
 
 public class MapController {
-    private Map map;
+    private final Map map;
 
     public MapController(Map map) {
         this.map = map;
@@ -19,7 +19,7 @@ public class MapController {
         mg.generate();
         mg.connect();
         Random rng = new Random();
-        mg.randomize(rng.nextFloat(0.09f,0.35f));
+        mg.randomize(rng.nextFloat(0.09f, 0.35f));
         map.setGenerated(true);
     }
 }

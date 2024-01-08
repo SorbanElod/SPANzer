@@ -7,28 +7,11 @@ import java.util.*;
 
 class MazeGenerator {
 
-    private static class Cell {
-        private int x, y;
-
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        Cell(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
-    private int rows, cols;
-    private Map map;
+    private final int rows;
+    private final int cols;
+    private final Map map;
     private List<Cell> cells;
     private List<Set<Cell>> sets;
-
     public MazeGenerator(Map map) {
         this.map = map;
         this.cols = map.getWidth() - 1;
@@ -185,5 +168,23 @@ class MazeGenerator {
             removeRandomWall();
         }
         addFrame();
+    }
+
+    private static class Cell {
+        private final int x;
+        private final int y;
+
+        Cell(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public int getY() {
+            return y;
+        }
     }
 }

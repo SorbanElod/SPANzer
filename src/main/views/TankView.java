@@ -7,7 +7,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class TankView {
-    private Tank tank;
+    private final Tank tank;
 
     public TankView(Tank tank) {
         this.tank = tank;

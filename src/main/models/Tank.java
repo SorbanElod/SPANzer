@@ -9,21 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tank {
+    public static final int bulletCapacity = 5;
+    private final BufferedImage transparentImage;
+    private final float moveSpeed = 4f;
+    private final float angularV = 4f;
+    private final int cannonLength = 30;
+    private final List<Bullet> bullets;
     public double scaleFactor = 1.0;
     private Point2D.Float corner;
     private Point2D.Float center;
     private Point2D.Float turret;
     private float angle;
     private BufferedImage baseImage;
-    private BufferedImage transparentImage;
-    private float moveSpeed = 3.7f;
-    private float angularV = 4f;
     private boolean isSpawned;
-    private final int cannonLength = 30;
-    private List<Bullet> bullets;
-    public static final int bulletCapacity = 5;
-    private float vXWeight;
-    private float vYWeight;
     private float vX;
     private float vY;
 
@@ -49,42 +47,28 @@ public class Tank {
         bullets = new ArrayList<>();
     }
 
-    public void addBullet(Bullet bullet) {
+    public boolean addBullet(Bullet bullet) {
         if (bullets.size() < bulletCapacity) {
             bullets.add(bullet);
+            return true;
         }
-    }
-
-    public void setvX(float vX) {
-        this.vX = vX;
-    }
-
-    public void setvY(float vY) {
-        this.vY = vY;
+        return false;
     }
 
     public float getvX() {
         return vX;
     }
 
+    public void setvX(float vX) {
+        this.vX = vX;
+    }
+
     public float getvY() {
         return vY;
     }
 
-    public float getvXWeight() {
-        return vXWeight;
-    }
-
-    public void setvXWeight(float vXWeight) {
-        this.vXWeight = vXWeight;
-    }
-
-    public float getvYWeight() {
-        return vYWeight;
-    }
-
-    public void setvYWeight(float vYWeight) {
-        this.vYWeight = vYWeight;
+    public void setvY(float vY) {
+        this.vY = vY;
     }
 
     public List<Bullet> getBullets() {
@@ -166,7 +150,7 @@ public class Tank {
     }
 
     public int getImgSize() {
-        return (int) (baseImage.getWidth() * scaleFactor);
+        return (int) (baseImage.getWidth() * scaleFactor * 0.9);
     }
 
     public float getDirY() {

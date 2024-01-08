@@ -9,10 +9,10 @@ import static java.time.Duration.ofSeconds;
 public class Bullet {
     private final float radius = 2.5f;
     private final float speed = 6f;
+    private final Point2D.Float center;
+    private final LocalTime created;
+    private final Duration lifetime = ofSeconds(10);
     private float vX, vY;
-    private Point2D.Float center;
-    private LocalTime created;
-    private final Duration lifetime = ofSeconds(7);
 
     public Bullet(Point2D.Float center, float dX, float dY) {
         this.center = center;

@@ -6,9 +6,9 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
 
-    private TankView tankView1;
-    private TankView tankView2;
-    private MapView mapView;
+    private final TankView tankView1;
+    private final TankView tankView2;
+    private final MapView mapView;
     private final int offset = 10;
 
     public GamePanel(TankView tankView1, TankView tankView2, MapView mapView) {

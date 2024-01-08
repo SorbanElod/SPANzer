@@ -1,14 +1,15 @@
 package main.views;
 
-import main.models.Map;
 import main.models.Brick;
+import main.models.Map;
 
 import java.awt.*;
 
 import static main.models.Brick.wallWidth;
 
 public class MapView {
-    private Map map;
+    private final Map map;
+
     public MapView(Map map) {
         this.map = map;
     }
@@ -25,7 +26,7 @@ public class MapView {
     }
 
     public void draw(Graphics g) {
-        if(map.isGenerated()){
+        if (map.isGenerated()) {
             for (Brick b : map.getWalls()) {
                 if (b != null) {
                     drawBrick(b, g);

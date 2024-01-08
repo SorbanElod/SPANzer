@@ -4,21 +4,26 @@ import main.models.Bullet;
 import main.models.Map;
 import main.models.Tank;
 
+import javax.sound.sampled.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 public class TankController implements KeyListener {
-    private Tank tank;
-    private BulletController bc;
+    private final Tank tank;
+    private final BulletController bc;
+    private final int player;
+    private final Random rng;
+    private final CollisionDetector cd;
     private boolean forward, backward;
     private boolean left, right;
-    private int player;
-    private Random rng;
 
-    public TankController(Tank tank, int player) {
+    public TankController(Tank tank, int player, CollisionDetector cd) {
         this.tank = tank;
+        this.cd = cd;
         forward = false;
         backward = false;
         left = false;
@@ -56,17 +61,13 @@ public class TankController implements KeyListener {
         if (angle < 0) {
             angle = 360 - angle;
         }
-
         tank.setvX(vX);
         tank.setvY(vY);
-        // this is the collision modifier
-        // if 1, no collision, if 0, then the entire direction is blocked
-        // everything between 1 and 0 is friction with walls or other tanks
-        vX *= tank.getvXWeight();
-        vY *= tank.getvYWeight();
 
-        currentPos.x += vX;
-        currentPos.y += vY;
+        cd.tankCollisionWithWalls(tank);
+
+        currentPos.x += tank.getvX();
+        currentPos.y += tank.getvY();
         tank.setCorner(currentPos);
         tank.setAngle(angle);
         tank.setCenter(new Point2D.Float(
@@ -90,8 +91,10 @@ public class TankController implements KeyListener {
     }
 
     private void fire() {
-        Bullet bullet = new Bullet(tank.getTurret(),tank.getDirX(),tank.getDirY());
-        tank.addBullet(bullet);
+        Bullet bullet = new Bullet(tank.getTurret(), tank.getDirX(), tank.getDirY());
+        if (tank.addBullet(bullet)) {
+            bounce();
+        }
     }
 
     @Override
@@ -148,4 +151,17 @@ public class TankController implements KeyListener {
         }
     }
 
+    private void bounce() {
+        Thread thread = new Thread(() -> {
+            try {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/resources/sound/sfx/bounce.wav"));
+                Clip bounceClip = AudioSystem.getClip();
+                bounceClip.open(audioInputStream);
+                bounceClip.start();
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        thread.start();
+    }
 }

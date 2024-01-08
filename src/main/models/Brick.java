@@ -4,11 +4,11 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class Brick {
-    private Point start;
-    private Point end;
-    private boolean isHorizontal;
-    private Rectangle2D rectangle;
     public final static int wallWidth = 5;
+    private final Point start;
+    private final Point end;
+    private final boolean isHorizontal;
+    private final Rectangle2D rectangle;
 
     public Brick(Point start, Point end) {
         this.start = start;

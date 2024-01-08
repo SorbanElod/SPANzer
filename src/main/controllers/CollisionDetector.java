@@ -8,10 +8,10 @@ import main.models.Tank;
 import java.util.stream.Stream;
 
 public class CollisionDetector {
+    private static final int hitBoxRadius = 25;
     private final Tank tank1, tank2;
     private final Map map;
-    private final float friction = 0.44f;
-    private static final int hitBoxRadius = 25;
+    private final float friction = 0.66f;
 
     public CollisionDetector(Tank tank1, Tank tank2, Map map) {
         this.tank1 = tank1;
@@ -102,16 +102,11 @@ public class CollisionDetector {
         }
     }
 
-    public void tankCollisionWithWalls() {
-        tankCollisionWithWalls(this.tank1);
-        tankCollisionWithWalls(this.tank2);
-    }
-
-    private void tankCollisionWithWalls(Tank tank) {
+    public void tankCollisionWithWalls(Tank tank) {
         map.getWalls().forEach(brick ->
         {
-            float Vx = 1;
-            float Vy = 1;
+            float Vx = tank.getvX();
+            float Vy = tank.getvY();
             if (brick.isHorizontal()) {
                 //check if tank can collide with wall's side
                 if (tank.getCorner().x + tank.getImgSize() >= brick.getStart().x && tank.getCorner().x <= brick.getEnd().x) {
@@ -167,8 +162,8 @@ public class CollisionDetector {
                     }
                 }
             }
-            tank.setvXWeight(Vx);
-            tank.setvYWeight(Vy);
+            tank.setvX(Vx);
+            tank.setvY(Vy);
         });
     }
 }

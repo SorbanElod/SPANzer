@@ -10,7 +10,7 @@ import java.io.*;
 
 public class GameFrame extends JFrame {
 
-    private GamePanel gamePanel;
+    private final GamePanel gamePanel;
     private TankView tv1;
     private TankView tv2;
     private Tank t1;
@@ -49,7 +49,6 @@ public class GameFrame extends JFrame {
 
         JPanel mapPanel = new JPanel();
         mapPanel.add(gamePanel);
-
         helpMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -135,6 +134,7 @@ public class GameFrame extends JFrame {
         }
         return null;
     }
+
     // Resize method
     public void resizeFrame(int newWidth, int newHeight) {
         this.setSize(newWidth, newHeight);

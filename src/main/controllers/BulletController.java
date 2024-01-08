@@ -8,7 +8,7 @@ import java.util.List;
 import static java.time.Duration.between;
 
 public class BulletController {
-    private List<Bullet> bullets;
+    private final List<Bullet> bullets;
 
     public BulletController(List<Bullet> bullets) {
         this.bullets = bullets;
